@@ -45,6 +45,19 @@ app.get('/dinossauro/del/:id', async (req, res) => {
     const dinossauros = await Dinossauro.find()
     res.render("dinossauro/lst", {dinossauros});
 })
+
+app.get('/dinossauro/upd/:id', async  (req, res) => {
+  //busca o registro que quero alterar
+  const dinossauro = await Dinossauro.findById(req.params.id)
+  res.render("dinossauro/upd", {dinossauro});
+})
+
+app.post('/dinossauro/upd/:id',  async (req, res) => {
+  const {id,nome,especie,descricao,altura,peso,anoDescoberta,dieta} = req.body
+  await Dinossauro.findByIdAndUpdate(id, {nome,especie,descricao,altura,peso,anoDescoberta,dieta})
+   const dinossauros = await Dinossauro.find()
+  res.render("dinossauro/lst", {dinossauros});
+})
  
 // Dinossauros em cima
 
@@ -119,8 +132,8 @@ app.get('/paleontologo/upd/:id', async  (req, res) => {
 })
 
 app.post('/paleontologo/upd/:id',  async (req, res) => {
-  const {id,nome,periodo} = req.body
-  await Paleontologo.findByIdAndUpdate(id, {nome,periodo})
+  const {id,nome,nascimento,descoberta} = req.body
+  await Paleontologo.findByIdAndUpdate(id, {nome,nascimento,descoberta})
    const paleontologos = await Paleontologo.find()
   res.render("paleontologo/lst", {paleontologos});
 })
